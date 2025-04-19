@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export const BodySection = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center py-16 px-6 bg-gray-900 min-h-[90vh]">
+    <div className="flex flex-col md:flex-row items-center py-16 px-22 bg-gray-900 min-h-[90vh]">
       {/* Left Content */}
       <div className="w-full md:w-1/2 space-y-6">
         <h1 className="text-white text-5xl md:text-6xl font-bold leading-tight">

@@ -81,7 +81,7 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="bg-gray-900 border-t border-gray-800">
-      <div className="max-w-7xl mx-auto py-12 px-6">
+      <div className="max-w-7xl mx-auto py-12">
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Logo and tagline */}
           <div className="mb-8 md:mb-0">
