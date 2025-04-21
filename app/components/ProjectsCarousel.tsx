@@ -145,9 +145,6 @@ export const ProjectsCarousel: React.FC = () => {
     <section className="py-16 px-6 bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <div className="text-gray-400 text-sm font-medium mb-4">
-            &lt;My Work&gt;
-          </div>
           <h2 className="text-white text-4xl font-bold mb-6">Projects</h2>
 
           {/* Filter Tabs */}
@@ -159,7 +156,7 @@ export const ProjectsCarousel: React.FC = () => {
                   onClick={() => setActiveTab(tab)}
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
                     activeTab === tab
-                      ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white"
+                      ? "bg-gradient-to-r from-blue-500 to-cyan-600 text-white"
                       : "text-gray-300 hover:text-white"
                   }`}
                 >
@@ -214,7 +211,7 @@ export const ProjectsCarousel: React.FC = () => {
 
                   {/* Project links/buttons */}
                   <div className="flex space-x-4">
-                    <button className="bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full px-6 py-2 hover:opacity-90 transition-opacity">
+                    <button className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-full px-6 py-2 hover:opacity-90 transition-opacity">
                       View Project
                     </button>
                     <button className="border border-gray-600 text-gray-300 rounded-full px-6 py-2 hover:bg-gray-700 transition-colors">
@@ -254,7 +251,7 @@ export const ProjectsCarousel: React.FC = () => {
                       onClick={() => setCurrentIndex(idx)}
                       className={`w-2 h-2 rounded-full transition-all ${
                         idx === currentIndex
-                          ? "bg-gradient-to-r from-pink-500 to-purple-600 w-4"
+                          ? "bg-gradient-to-r from-blue-500 to-cyan-600 w-4"
                           : "bg-gray-600"
                       }`}
                     />
