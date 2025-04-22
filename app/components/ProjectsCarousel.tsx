@@ -2,6 +2,7 @@
 // ProjectsCarousel.tsx
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { fetchGitHubRepoDetails, fetchGitHubRepos } from "../lib/github";
 
 // Define interfaces for our types
 interface Technology {
@@ -17,86 +18,50 @@ interface Project {
   image: string;
   category: "AI" | "Frontend" | "Backend" | "All";
   technologies: Technology[];
+  repoUrl?: string;
+  homepage?: string;
 }
 
-// Sample project data
-const projectsData: Project[] = [
-  {
-    id: 1,
-    title: "AI-Powered Content Generator",
-    description:
-      "A machine learning application that generates high-quality content based on user prompts. Utilizes GPT models and custom training data.",
-    image: "/images/project-ai.jpg",
-    category: "AI",
-    technologies: [
-      { name: "Python", color: "bg-indigo-500", textColor: "text-white" },
-      { name: "TensorFlow", color: "bg-orange-500", textColor: "text-white" },
-      { name: "Flask", color: "bg-gray-700", textColor: "text-white" },
-      { name: "Docker", color: "bg-blue-500", textColor: "text-white" },
-    ],
-  },
-  {
-    id: 2,
-    title: "E-Commerce Dashboard",
-    description:
-      "A responsive dashboard for e-commerce businesses to track sales, inventory, and customer analytics with real-time data visualization.",
-    image: "/images/project-frontend.jpg",
-    category: "Frontend",
-    technologies: [
-      { name: "React", color: "bg-blue-400", textColor: "text-white" },
-      { name: "TypeScript", color: "bg-blue-600", textColor: "text-white" },
-      { name: "Tailwind", color: "bg-teal-400", textColor: "text-gray-800" },
-      { name: "Chart.js", color: "bg-pink-500", textColor: "text-white" },
-    ],
-  },
-  {
-    id: 3,
-    title: "Microservices API Platform",
-    description:
-      "A scalable backend infrastructure using microservices architecture to handle high-volume data processing and API requests.",
-    image: "/images/project-backend.jpg",
-    category: "Backend",
-    technologies: [
-      { name: "Node.js", color: "bg-green-500", textColor: "text-white" },
-      { name: "Express", color: "bg-gray-600", textColor: "text-white" },
-      { name: "MongoDB", color: "bg-green-600", textColor: "text-white" },
-      { name: "Redis", color: "bg-red-500", textColor: "text-white" },
-      { name: "AWS", color: "bg-orange-400", textColor: "text-white" },
-    ],
-  },
-  {
-    id: 4,
-    title: "Computer Vision Object Detector",
-    description:
-      "An application that uses machine learning to identify and classify objects in images and video streams in real-time.",
-    image: "/images/project-ai-2.jpg",
-    category: "AI",
-    technologies: [
-      { name: "Python", color: "bg-indigo-500", textColor: "text-white" },
-      { name: "OpenCV", color: "bg-green-700", textColor: "text-white" },
-      { name: "PyTorch", color: "bg-red-600", textColor: "text-white" },
-      { name: "FastAPI", color: "bg-teal-600", textColor: "text-white" },
-    ],
-  },
-  {
-    id: 5,
-    title: "Progressive Web Application",
-    description:
-      "A cross-platform PWA that provides offline functionality and native-like experience for users across devices.",
-    image: "/images/project-frontend-2.jpg",
-    category: "Frontend",
-    technologies: [
-      { name: "React", color: "bg-blue-400", textColor: "text-white" },
-      { name: "Next.js", color: "bg-gray-800", textColor: "text-white" },
-      { name: "Tailwind", color: "bg-teal-400", textColor: "text-gray-800" },
-      {
-        name: "Service Workers",
-        color: "bg-purple-600",
-        textColor: "text-white",
-      },
-    ],
-  },
-];
+// Map GitHub languages to technology colors
+const techColorMap: Record<string, { color: string; textColor: string }> = {
+  JavaScript: { color: "bg-yellow-400", textColor: "text-gray-800" },
+  TypeScript: { color: "bg-blue-600", textColor: "text-white" },
+  Python: { color: "bg-indigo-500", textColor: "text-white" },
+  HTML: { color: "bg-orange-500", textColor: "text-white" },
+  CSS: { color: "bg-blue-400", textColor: "text-white" },
+  Java: { color: "bg-red-500", textColor: "text-white" },
+  "C#": { color: "bg-green-600", textColor: "text-white" },
+  PHP: { color: "bg-purple-500", textColor: "text-white" },
+  Ruby: { color: "bg-red-600", textColor: "text-white" },
+  Go: { color: "bg-cyan-500", textColor: "text-white" },
+  Rust: { color: "bg-orange-600", textColor: "text-white" },
+  Swift: { color: "bg-orange-500", textColor: "text-white" },
+  Kotlin: { color: "bg-purple-600", textColor: "text-white" },
+  // Add more as needed
+};
+
+// Helper function to determine project category based on topics or description
+const determineCategory = (topics: string[], description: string): "AI" | "Frontend" | "Backend" | "All" => {
+  const topicsLower = topics.map(t => t.toLowerCase());
+  const descLower = description ? description.toLowerCase() : "";
+  
+  if (topicsLower.some(t => ["ai", "ml", "machine-learning", "tensorflow", "pytorch"].includes(t)) ||
+      descLower.includes("ai") || descLower.includes("machine learning")) {
+    return "AI";
+  }
+  
+  if (topicsLower.some(t => ["frontend", "react", "vue", "angular", "ui", "ux"].includes(t)) ||
+      descLower.includes("frontend") || descLower.includes("ui")) {
+    return "Frontend";
+  }
+  
+  if (topicsLower.some(t => ["backend", "api", "server", "database", "node"].includes(t)) ||
+      descLower.includes("backend") || descLower.includes("api")) {
+    return "Backend";
+  }
+  
+  return "All";
+};
 
 // Component for individual technology chips
 const TechChip: React.FC<{ tech: Technology }> = ({ tech }) => {
@@ -111,24 +76,90 @@ const TechChip: React.FC<{ tech: Technology }> = ({ tech }) => {
 
 export const ProjectsCarousel: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("All");
-  const [filteredProjects, setFilteredProjects] =
-    useState<Project[]>(projectsData);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Filter projects when tab changes
+  // Fetch GitHub repos on component mount
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setLoading(true);
+        // Replace with your actual GitHub username and token
+        // Note: In a production app, you should use environment variables for the token
+        const username = "danhenriquex";
+        const token = "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"; // Consider using environment variables
+
+        const repos = await fetchGitHubRepos(username, token);
+        
+        // Process the top 10 repos (or adjust as needed)
+        const processedProjects = await Promise.all(
+          repos.slice(0, 10).map(async (repo: any, index: number) => {
+            // Fetch additional details for each repo
+            const details = await fetchGitHubRepoDetails(username, repo.name, token);
+            
+            // Extract languages from the repo
+            const technologies: Technology[] = [];
+            if (details.language) {
+              technologies.push({
+                name: details.language,
+                ...techColorMap[details.language] || { color: "bg-gray-600", textColor: "text-white" }
+              });
+            }
+            
+            // Add additional technologies from topics if available
+            if (details.topics && details.topics.length > 0) {
+              details.topics.slice(0, 3).forEach((topic: string) => {
+                technologies.push({
+                  name: topic,
+                  color: "bg-gray-700",
+                  textColor: "text-white"
+                });
+              });
+            }
+            
+            return {
+              id: index + 1,
+              title: repo.name,
+              description: repo.description || "No description available",
+              image: "/images/project-default.jpg", // Use a default image or placeholder
+              category: determineCategory(details.topics || [], repo.description || ""),
+              technologies,
+              repoUrl: repo.html_url,
+              homepage: repo.homepage
+            };
+          })
+        );
+        
+        setProjects(processedProjects);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+        setError("Failed to load projects. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  // Filter projects when tab changes or when projects are loaded
   useEffect(() => {
     if (activeTab === "All") {
-      setFilteredProjects(projectsData);
+      setFilteredProjects(projects);
     } else {
       setFilteredProjects(
-        projectsData.filter((project) => project.category === activeTab)
+        projects.filter((project) => project.category === activeTab)
       );
     }
     setCurrentIndex(0); // Reset carousel position when changing tabs
-  }, [activeTab]);
+  }, [activeTab, projects]);
 
   // Navigate to previous project
   const prevSlide = () => {
+    if (filteredProjects.length === 0) return;
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? filteredProjects.length - 1 : prevIndex - 1
     );
@@ -136,6 +167,7 @@ export const ProjectsCarousel: React.FC = () => {
 
   // Navigate to next project
   const nextSlide = () => {
+    if (filteredProjects.length === 0) return;
     setCurrentIndex((prevIndex) =>
       prevIndex === filteredProjects.length - 1 ? 0 : prevIndex + 1
     );
@@ -145,7 +177,7 @@ export const ProjectsCarousel: React.FC = () => {
     <section className="py-16 px-6 bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-white text-4xl font-bold mb-6">Projects</h2>
+          <h2 className="text-white text-4xl font-bold mb-6">My GitHub Projects</h2>
 
           {/* Filter Tabs */}
           <div className="flex justify-center mb-8">
@@ -169,13 +201,21 @@ export const ProjectsCarousel: React.FC = () => {
 
         {/* Carousel */}
         <div className="relative bg-gray-800 rounded-3xl p-8 overflow-hidden">
-          {filteredProjects.length > 0 ? (
+          {loading ? (
+            <div className="flex items-center justify-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+          ) : error ? (
+            <div className="flex items-center justify-center h-64">
+              <p className="text-red-400">{error}</p>
+            </div>
+          ) : filteredProjects.length > 0 ? (
             <>
               <div className="flex flex-col md:flex-row gap-8">
                 {/* Project Image */}
                 <div className="w-full md:w-1/2 relative rounded-xl overflow-hidden h-64 md:h-96">
                   <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 to-purple-600/20"></div>
-                  {/* Replace with your actual image path */}
+                  {/* Using placeholder image */}
                   <div className="relative h-full w-full bg-gray-700">
                     <Image
                       src="/api/placeholder/400/320"
@@ -211,12 +251,24 @@ export const ProjectsCarousel: React.FC = () => {
 
                   {/* Project links/buttons */}
                   <div className="flex space-x-4">
-                    <button className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-full px-6 py-2 hover:opacity-90 transition-opacity">
-                      View Project
-                    </button>
-                    <button className="border border-gray-600 text-gray-300 rounded-full px-6 py-2 hover:bg-gray-700 transition-colors">
-                      Source Code
-                    </button>
+                    <a 
+                      href={filteredProjects[currentIndex].repoUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-full px-6 py-2 hover:opacity-90 transition-opacity"
+                    >
+                      View Repository
+                    </a>
+                    {filteredProjects[currentIndex].homepage && (
+                      <a 
+                        href={filteredProjects[currentIndex].homepage} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="border border-gray-600 text-gray-300 rounded-full px-6 py-2 hover:bg-gray-700 transition-colors"
+                      >
+                        Live Demo
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
@@ -226,6 +278,7 @@ export const ProjectsCarousel: React.FC = () => {
                 <button
                   onClick={prevSlide}
                   className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600 transition-colors"
+                  aria-label="Previous project"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -254,6 +307,7 @@ export const ProjectsCarousel: React.FC = () => {
                           ? "bg-gradient-to-r from-blue-500 to-cyan-600 w-4"
                           : "bg-gray-600"
                       }`}
+                      aria-label={`Go to project ${idx + 1}`}
                     />
                   ))}
                 </div>
@@ -261,6 +315,7 @@ export const ProjectsCarousel: React.FC = () => {
                 <button
                   onClick={nextSlide}
                   className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600 transition-colors"
+                  aria-label="Next project"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
