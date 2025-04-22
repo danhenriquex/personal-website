@@ -2,7 +2,7 @@ import { fetchGitHubRepos } from "../lib/github";
 
 export default async function Home() {
   const username = "danhenriquex";
-  const token = "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";
+  const token = "teste";
 
   const repos = await fetchGitHubRepos(username, token);
 

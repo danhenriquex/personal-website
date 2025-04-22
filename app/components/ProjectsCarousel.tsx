@@ -90,7 +90,7 @@ export const ProjectsCarousel: React.FC = () => {
         // Replace with your actual GitHub username and token
         // Note: In a production app, you should use environment variables for the token
         const username = "danhenriquex";
-        const token = "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"; // Consider using environment variables
+        const token = "teste"; // Consider using environment variables
 
         const repos = await fetchGitHubRepos(username, token);
         
