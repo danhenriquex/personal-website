@@ -149,7 +149,7 @@ export const ProjectsCarousel: React.FC = () => {
 
           {/* Filter Tabs */}
           <div className="flex justify-center mb-8">
-            <div className="inline-flex bg-gray-800/50 border border-gray-700 rounded-full p-1">
+            <div className="inline-flex  border border-gray-700 rounded-full p-1">
               {["All", "AI", "Frontend", "Backend"].map((tab) => (
                 <button
                   key={tab}
@@ -168,7 +168,7 @@ export const ProjectsCarousel: React.FC = () => {
         </div>
 
         {/* Carousel */}
-        <div className="relative bg-gray-800/50 border border-gray-700 rounded-3xl p-8 overflow-hidden">
+        <div className="relative border border-gray-700 rounded-3xl p-8 overflow-hidden">
           {filteredProjects.length > 0 ? (
             <>
               <div className="flex flex-col md:flex-row gap-8">

@@ -2,13 +2,16 @@ import React from "react";
 import { TechChipProps, technologies } from "../constants/stacks";
 
 const TechChip = ({ tech }: TechChipProps) => {
+  const Icon = tech.icon;
+
   return (
     <div
-      className={`text-sm px-4 py-2 rounded-full font-medium fade-in shadow-md ${tech.color} ${tech.textColor}`}
+      className={`flex items-center gap-2 text-sm px-4 py-2 rounded-full font-medium fade-in shadow-md ${tech.color} ${tech.textColor}`}
       style={{
         animationDelay: tech.animationDelay,
       }}
     >
+      <Icon color={tech.textColor} size={18} />
       {tech.name}
     </div>
   );
@@ -20,7 +23,7 @@ export const AboutMe: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left Column - About Me Text */}
-          <div className="w-full md:w-1/2 bg-gray-800/50 border border-gray-700 rounded-3xl p-8">
+          <div className="w-full md:w-1/2 border border-gray-700 rounded-3xl p-8">
             <h2 className="text-white text-4xl font-bold mb-6">About me</h2>
             <div className="text-gray-300 space-y-4">
               <p>
@@ -46,7 +49,7 @@ export const AboutMe: React.FC = () => {
 
           {/* Right Column - Technologies */}
           {/* Right Column - Technologies */}
-          <div className="w-full md:w-1/2 backdrop-blur-md bg-gray-800/50 border border-gray-700 rounded-3xl p-8 shadow-lg">
+          <div className="w-full md:w-1/2 backdrop-blur-md  border border-gray-700 rounded-3xl p-8 shadow-lg">
             <h2 className="text-white text-3xl md:text-4xl font-semibold mb-4 text-center">
               Technologies & Expertise
             </h2>
@@ -58,7 +61,16 @@ export const AboutMe: React.FC = () => {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 justify-items-center">
               {technologies.map((tech) => (
-                <TechChip key={tech.name} tech={tech} />
+                <TechChip
+                  key={tech.name}
+                  tech={{
+                    name: tech.name,
+                    icon: tech.icon,
+                    color: tech.color,
+                    textColor: tech.textColor,
+                    animationDelay: tech.animationDelay,
+                  }}
+                />
               ))}
             </div>
           </div>
