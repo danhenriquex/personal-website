@@ -25,7 +25,7 @@ export const BodySection = () => {
           </div>
 
           {/* Right Column - Image */}
-          <div className="w-full md:w-1/2 bg-gray-800 rounded-3xl p-8 relative overflow-hidden">
+          <div className="w-full md:w-1/2 bg-gray-800/50 border border-gray-700 rounded-3xl p-8 relative overflow-hidden">
             <div className="flex items-center justify-center h-full">
               <Image
                 src={profileImage}

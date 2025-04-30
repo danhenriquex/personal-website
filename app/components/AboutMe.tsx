@@ -4,7 +4,7 @@ import { TechChipProps, technologies } from "../constants/stacks";
 const TechChip = ({ tech }: TechChipProps) => {
   return (
     <div
-      className={`${tech.color} ${tech.textColor} px-4 py-2 rounded-full font-medium inline-block fade-in`}
+      className={`text-sm px-4 py-2 rounded-full font-medium fade-in shadow-md ${tech.color} ${tech.textColor}`}
       style={{
         animationDelay: tech.animationDelay,
       }}
@@ -20,7 +20,7 @@ export const AboutMe: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left Column - About Me Text */}
-          <div className="w-full md:w-1/2 bg-gray-800 rounded-3xl p-8">
+          <div className="w-full md:w-1/2 bg-gray-800/50 border border-gray-700 rounded-3xl p-8">
             <h2 className="text-white text-4xl font-bold mb-6">About me</h2>
             <div className="text-gray-300 space-y-4">
               <p>
@@ -45,13 +45,18 @@ export const AboutMe: React.FC = () => {
           </div>
 
           {/* Right Column - Technologies */}
-          <div className="w-full md:w-1/2 bg-gray-800 rounded-3xl p-8 relative overflow-hidden">
-            <div className="text-white text-4xl font-bold mb-6 text-center">
-              Technologies and expertise
-            </div>
+          {/* Right Column - Technologies */}
+          <div className="w-full md:w-1/2 backdrop-blur-md bg-gray-800/50 border border-gray-700 rounded-3xl p-8 shadow-lg">
+            <h2 className="text-white text-3xl md:text-4xl font-semibold mb-4 text-center">
+              Technologies & Expertise
+            </h2>
 
-            {/* Technologies floating + fade-in cloud */}
-            <div className="flex flex-wrap gap-4 justify-center items-center">
+            <p className="text-gray-400 text-center mb-6">
+              Tools and technologies I use daily to build efficient and elegant
+              solutions.
+            </p>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 justify-items-center">
               {technologies.map((tech) => (
                 <TechChip key={tech.name} tech={tech} />
               ))}
