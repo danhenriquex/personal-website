@@ -16,7 +16,7 @@ const TechChip = ({ tech }: TechChipProps) => {
 
 export const AboutMe: React.FC = () => {
   return (
-    <section className="py-16 px-6 bg-gray-900">
+    <div className="py-16 px-6 bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left Column - About Me Text */}
@@ -46,7 +46,7 @@ export const AboutMe: React.FC = () => {
 
           {/* Right Column - Technologies */}
           <div className="w-full md:w-1/2 bg-gray-800 rounded-3xl p-8 relative overflow-hidden">
-            <div className="text-white text-4xl font-bold mb-6">
+            <div className="text-white text-4xl font-bold mb-6 text-center">
               Technologies and expertise
             </div>
 
@@ -59,6 +59,6 @@ export const AboutMe: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };

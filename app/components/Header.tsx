@@ -26,8 +26,8 @@ export const Header = () => {
   };
 
   return (
-    <header className="bg-gray-900 py-4 shadow-md w-full md:static fixed top-0 z-50">
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-4">
+    <div className="bg-gray-900 py-4 shadow-md w-full md:static fixed top-0 z-50">
+      <div className="max-w-7xl mx-auto flex justify-between items-center pl-6 pr-4 md:pl-8 md:pr-0">
         {/* Logo / Name */}
         <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent focus:outline-none">
           DH
@@ -179,6 +179,6 @@ export const Header = () => {
           </>
         )}
       </div>
-    </header>
+    </div>
   );
 };
