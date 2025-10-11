@@ -11,7 +11,7 @@ const TechChip = ({ tech }: TechChipProps) => {
         animationDelay: tech.animationDelay,
       }}
     >
-      <Icon color={tech.textColor} size={18} />
+      <Icon />
       {tech.name}
     </div>
   );
@@ -19,7 +19,7 @@ const TechChip = ({ tech }: TechChipProps) => {
 
 export const AboutMe: React.FC = () => {
   return (
-    <div className="py-16 px-6 bg-gray-900">
+    <div className="py-6 px-6 bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left Column - About Me Text */}

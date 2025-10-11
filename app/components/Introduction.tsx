@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import profileImage from "../public/images/dan_professional.jpeg";
+import profileImage from "../public/images/danilo_professional.png";
 
-export const BodySection = () => {
+export const Introduction = () => {
   return (
-    <div className="bg-gray-900 py-16 px-6">
+    <div className="bg-gray-900 py-6 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left Column */}
@@ -30,8 +30,8 @@ export const BodySection = () => {
               <Image
                 src={profileImage}
                 alt="Developer portrait"
-                width={350}
-                height={350}
+                width={300}
+                height={300}
                 className="object-cover rounded-lg"
               />
             </div>

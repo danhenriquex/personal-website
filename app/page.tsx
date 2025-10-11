@@ -1,5 +1,5 @@
 import { AboutMe } from "./components/AboutMe";
-import { BodySection } from "./components/BodySection";
+import { Introduction } from "./components/Introduction";
 import {Footer} from "./components/Footer";
 import { Header } from "./components/Header";
 import { ProjectsCarousel } from "./components/ProjectsCarousel";
@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <BodySection />
+      <Introduction />
       <AboutMe />
       <ProjectsCarousel />
       <Footer/>

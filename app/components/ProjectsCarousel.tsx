@@ -142,7 +142,7 @@ export const ProjectsCarousel: React.FC = () => {
   };
 
   return (
-    <section className="py-16 px-6 bg-gray-900">
+    <section className="py-6 px-6 bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-white text-4xl font-bold mb-6">Projects</h2>

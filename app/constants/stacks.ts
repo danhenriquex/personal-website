@@ -132,7 +132,7 @@ export const technologies: Technology[] = [
     name: "Tailwind",
     icon: SiTailwindcss,
     color: "bg-teal-400",
-    textColor: "text-gray-800",
+    textColor: "text-black",
     animationDelay: "5.5s",
     animationDuration: "29s",
   },
