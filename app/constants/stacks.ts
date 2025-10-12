@@ -16,8 +16,13 @@ import {
   SiPython,
   SiApachekafka,
   SiCypress,
+  SiNextdotjs,
+  SiJavascript,
+  SiGooglecloud,
+  SiGit,
+  SiMaterialdesign,
 } from "react-icons/si";
-
+import { Brain, Code, Database, Wrench } from "lucide-react";
 
 export interface Technology {
   name: string;
@@ -38,6 +43,164 @@ export type TechChipProps = {
   };
 };
 
+export const techStacks = [
+  {
+    icon: Brain,
+    title: "IA & Machine Learning",
+    technologies: [
+      {
+        name: "PyTorch",
+        icon: SiPytorch,
+        color: "bg-red-500",
+        textColor: "text-white",
+      },
+      {
+        name: "TensorFlow",
+        icon: SiTensorflow,
+        color: "bg-orange-500",
+        textColor: "text-white",
+      },
+      {
+        name: "scikit-learn",
+        icon: SiScikitlearn,
+        color: "bg-yellow-500",
+        textColor: "text-gray-800",
+      },
+      {
+        name: "Python",
+        icon: SiPython,
+        color: "bg-indigo-500",
+        textColor: "text-white",
+      },
+      {
+        name: "FastAPI",
+        icon: SiFastapi,
+        color: "bg-teal-600",
+        textColor: "text-white",
+      },
+    ],
+  },
+  {
+    icon: Code,
+    title: "Desenvolvimento",
+    technologies: [
+      {
+        name: "React",
+        icon: SiReact,
+        color: "bg-blue-400",
+        textColor: "text-white",
+      },
+      {
+        name: "React Native",
+        icon: SiNativescript,
+        color: "bg-blue-300",
+        textColor: "text-white",
+      },
+      {
+        name: "Next.js",
+        icon: SiNextdotjs,
+        color: "bg-black",
+        textColor: "text-white",
+      },
+      {
+        name: "TypeScript",
+        icon: SiTypescript,
+        color: "bg-blue-600",
+        textColor: "text-white",
+      },
+      {
+        name: "JavaScript",
+        icon: SiJavascript,
+        color: "bg-yellow-400",
+        textColor: "text-black",
+      },
+      {
+        name: "Node.js",
+        icon: SiNodedotjs,
+        color: "bg-green-500",
+        textColor: "text-white",
+      },
+      {
+        name: "Golang",
+        icon: SiGo,
+        color: "bg-cyan-600",
+        textColor: "text-white",
+      },
+      {
+        name: "Expo",
+        icon: SiExpo,
+        color: "bg-black",
+        textColor: "text-white",
+      },
+    ],
+  },
+  {
+    icon: Database,
+    title: "Infraestrutura & DevOps",
+    technologies: [
+      {
+        name: "Docker",
+        icon: SiDocker,
+        color: "bg-blue-500",
+        textColor: "text-white",
+      },
+      {
+        name: "PostgreSQL",
+        icon: SiPostgresql,
+        color: "bg-indigo-700",
+        textColor: "text-white",
+      },
+      {
+        name: "GCP",
+        icon: SiGooglecloud,
+        color: "bg-blue-600",
+        textColor: "text-white",
+      },
+      {
+        name: "CI/CD",
+        icon: SiCypress,
+        color: "bg-purple-600",
+        textColor: "text-white",
+      },
+      {
+        name: "Git",
+        icon: SiGit,
+        color: "bg-orange-600",
+        textColor: "text-white",
+      },
+      {
+        name: "Kafka",
+        icon: SiApachekafka,
+        color: "bg-orange-600",
+        textColor: "text-white",
+      },
+    ],
+  },
+  {
+    icon: Wrench,
+    title: "Design & Ferramentas",
+    technologies: [
+      {
+        name: "Tailwind",
+        icon: SiTailwindcss,
+        color: "bg-teal-400",
+        textColor: "text-black",
+      },
+      {
+        name: "Material UI",
+        icon: SiMaterialdesign,
+        color: "bg-blue-500",
+        textColor: "text-white",
+      },
+      {
+        name: "React Query",
+        icon: SiReactquery,
+        color: "bg-pink-500",
+        textColor: "text-white",
+      },
+    ],
+  },
+];
 
 export const technologies: Technology[] = [
   {
